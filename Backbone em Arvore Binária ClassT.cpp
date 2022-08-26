@@ -146,8 +146,6 @@ void BST<T>::rotateRight (BSTNode<T>* Gr, BSTNode<T>* Par, BSTNode<T>* Ch)
     // Gr = pai de Par
     // Par = pai de Ch
 
-    // BSTNode<T> *tmp;
-
     if (Par==root)
     {
         Par->left=Ch->right;
@@ -167,8 +165,6 @@ void BST<T>::rotateLeft (BSTNode<T>* Gr, BSTNode<T>* Par, BSTNode<T>* Ch)
 {
     // Gr = pai de Par
     // Par = pai de Ch
-
-    // BSTNode<T> *tmp;
 
     if (Par==root)
     {
@@ -195,12 +191,12 @@ void BST<T>::createBackboneR ()
     {
         while (tmp->left!=0)
         {
-            if (tmp==root) // Quando o pai é a raiz
+            while (tmp==root) // Quando o pai é a raiz
             {
                 if (tmp->left!=0) // Se a raiz tem filho à esquerda
                 {
                     rotateRight (Gr, tmp, tmp->left);
-                    Gr=root;
+                    tmp=root;
                 }
                 else // Se a raiz só tem filho à direita
                 {
@@ -208,7 +204,7 @@ void BST<T>::createBackboneR ()
                     tmp=tmp->right;
                 }
             }
-            else // Quando o não é raiz
+            if (tmp!=root)// Quando o não é raiz
             {   
                 while (tmp->left!=0) 
                 {
@@ -241,32 +237,33 @@ void BST<T>::createBackboneL ()
     {
         while (tmp->right!=0)
         {
-            if (tmp==root) // Quando o pai é a raiz
+            while (tmp==root) // Quando o pai é a raiz
             {
-                if (tmp->right!=0) // Se a raiz tem filho à esquerda
+                if (tmp->right!=0) // Se a raiz tem filho à direita
                 {
                     rotateLeft (Gr, tmp, tmp->right);
-                    Gr=root;
+                    tmp=root;
                 }
                 else // Se a raiz só tem filho à direita
                 {
                     Gr=root;
                     tmp=tmp->left;
                 }
+
             }
-            else // Quando o não é raiz
+            if (tmp!=root) // Quando o não é raiz
             {   
                 while (tmp->right!=0) 
                 {
-
                     // aqui dentro o gr n pode mudar e o tmp tem sempre que ser
                     // quem o gr aponta
 
                     Par=tmp;
                     Ch=tmp->right;
-                    rotateRight (Gr, Par, Ch);
+                    rotateLeft (Gr, Par, Ch);
 
                     tmp=Gr->left;
+
                 }    
             }
         }
